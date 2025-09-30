@@ -1,0 +1,156 @@
+<odoo>
+    <!-- Menu -->
+    <menuitem id="menu_hatchery_management" name="Hatchery Management" sequence="10"/>
+
+    <!-- Action -->
+    <record id="action_egg_batch" model="ir.actions.act_window">
+        <field name="name">Egg Batches</field>
+        <field name="res_model">hatchery.egg.batch</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu for Egg Batch -->
+    <menuitem id="menu_egg_batch_root" name="Egg Batch" parent="menu_hatchery_management" sequence="10"/>
+    <menuitem id="menu_egg_batch_action" name="Manage Egg Batches" parent="menu_egg_batch_root" action="action_egg_batch"/>
+
+    <!-- List View -->
+    <record id="view_egg_batch_list" model="ir.ui.view">
+        <field name="name">egg.batch.list</field>
+        <field name="model">hatchery.egg.batch</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="company_id"/>
+                <field name="user_id"/>
+                <field name="batch_no" readonly="1"/>
+                <field name="date_received"/>
+                <field name="qty_received"/>
+                <field name="qty_available"/>
+                <field name="pre_storage_waste"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_egg_batch_form" model="ir.ui.view">
+        <field name="name">egg.batch.form</field>
+        <field name="model">hatchery.egg.batch</field>
+        <field name="arch" type="xml">
+            <form string="Egg Batch">
+                <!-- Header -->
+<header>
+    <button name="action_send_to_setter" type="object" string="Send to Setter"
+            class="btn-primary"/>
+    
+    <button name="action_done" type="object" string="Done"
+            class="btn-success"/>
+
+    <field name="state" widget="statusbar" statusbar_visible="draft,in_setter,done"/>
+</header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="batch_no" readonly="1"/>
+                            <field name="date_received"/>
+                            <field name="qty_received"/>
+                            <field name="qty_available"/>
+                        </group>
+                        <group>
+                            <field name="pre_storage_waste"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <button name="action_break_eggs" type="object" string="Egg Break" class="btn-danger"/>
+                    </group>
+
+                    <notebook>
+                        <!-- Selection of Eggs -->
+                        <page string="Selection of Eggs">
+                            <field name="egg_selection_ids">
+                                <list>
+                                    <field name="lot"/>
+                                    <field name="qty"/>
+                                    <field name="date"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Equipments -->
+                        <page string="Equipments">
+                            <field name="equipment_ids">
+                                <list>
+                                    <field name="lot"/>
+                                    <field name="qty"/>
+                                    <field name="date"/>
+                                    <field name="production_summary"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Materials -->
+                        <page string="Materials">
+                            <field name="material_ids">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="lot"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Temperature -->
+                        <page string="Temperature">
+                            <field name="temperature_ids">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="max_temp"/>
+                                    <field name="min_temp"/>
+                                    <field name="avg_temp"/>
+                                    <field name="humidity"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Sanitizer Cleaning -->
+                        <page string="Sanitizer Cleaning">
+                            <field name="sanitizer_ids">
+                                <list>
+                                    <field name="checklist"/>
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- Break History -->
+                        <page string="Break History">
+                            <field name="break_line_ids">
+                                <list editable="bottom">
+                                    <field name="date" readonly="1"/>
+                                    <field name="break_qty"/>
+                                    <field name="note"/>
+                                    <field name="user_id" readonly="1"/>
+                                    <field name="processed" readonly="1"/>
+                            
+                                </list>
+                            </field>
+                            <footer>
+                                <button name="action_break_eggs" type="object" string="Egg Break" class="btn-danger"/>
+                            </footer>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+</odoo>
+

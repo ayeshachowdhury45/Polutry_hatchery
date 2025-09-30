@@ -1,0 +1,118 @@
+<odoo>
+    <!-- Action -->
+    <record id="action_hatcher_stage" model="ir.actions.act_window">
+        <field name="name">Hatcher Stages</field>
+        <field name="res_model">hatchery.hatcher.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+<menuitem id="menu_hatcher_stage_root" name="Hatcher Stage" parent="menu_hatchery_management" sequence="30"/>
+<menuitem id="menu_hatcher_stage_action" name="Manage Hatcher Stages" parent="menu_hatcher_stage_root" action="action_hatcher_stage"/>
+    <!-- List View -->
+    <record id="view_hatcher_stage_tree" model="ir.ui.view">
+        <field name="name">hatcher.stage.list</field>
+        <field name="model">hatchery.hatcher.stage</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="setter_stage_id"/>
+                <field name="machine_id"/>
+                <field name="quantity_loaded"/>
+                <field name="mortality"/>
+                <field name="success_rate"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hatcher_stage_form" model="ir.ui.view">
+        <field name="name">hatcher.stage.form</field>
+        <field name="model">hatchery.hatcher.stage</field>
+        <field name="arch" type="xml">
+            <form string="Hatcher Stage">
+                <header>
+                    <!-- Button: Move to Packaging -->
+                    <button name="action_move_to_packaging"
+                            type="object"
+                            string="Move to Packaging"
+                            class="btn-primary"/>
+                    <!-- Button: Done -->
+                    <button name="action_done"
+                            type="object"
+                            string="Done"
+                            class="btn-success"/>
+                    <!-- Status Bar -->
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_hatcher,ready_for_packaging,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="setter_stage_id"/>
+                            <field name="machine_id"/>
+                        </group>
+                        <group>
+                            <field name="quantity_loaded"/>
+                            <field name="mortality"/>
+                            <field name="success_rate" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <!-- Equipments Tab -->
+                        <page string="Equipments">
+                            <field name="equipment_ids">
+                                <list editable="bottom">
+                                    <field name="equipment_id"/>
+                                    <field name="lot"/>
+                                    <field name="qty"/>
+                                    <field name="date"/>
+                                    <field name="production_summary"/>
+                                </list>
+                            </field>
+                        </page>
+                        <!-- Materials Tab -->
+                        <page string="Materials">
+                            <field name="material_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="lot"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal"/>
+                                </list>
+                            </field>
+                        </page>
+                        <!-- Temperature Tab -->
+                        <page string="Temperature">
+                            <field name="temperature_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="min_temp"/>
+                                    <field name="max_temp"/>
+                                    <field name="avg_temp"/>
+                                    <field name="humidity"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <!-- Sanitizer Cleaning Tab -->
+                        <page string="Sanitizer Cleaning">
+                            <field name="sanitizer_ids">
+                                <list editable="bottom">
+                                    <field name="checklist"/>
+                                    <field name="date"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+</odoo>
